@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   s.dependency 'GooglePlaces'
+  s.dependency 'GoogleMaps'
   s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.
