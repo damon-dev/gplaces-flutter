@@ -41,7 +41,7 @@ extension Dictionary<String, Any?> {
             filter.locationBias = bounds
         }
         if(type != nil) {
-            filter.type = type!.typeFiler()
+            filter.types = type!.typeFiler()
         }
         
         return filter
@@ -144,14 +144,21 @@ extension GMSDayOfWeek {
 }
 
 extension String {
-    func typeFiler() -> GMSPlacesAutocompleteTypeFilter {
+    func typeFiler() -> [String]? {
         switch self {
-        case "ADDRESS": return GMSPlacesAutocompleteTypeFilter.address
-        case "CITIES": return GMSPlacesAutocompleteTypeFilter.city
-        case "ESTABLISHMENT": return GMSPlacesAutocompleteTypeFilter.establishment
-        case "GEOCODE": return GMSPlacesAutocompleteTypeFilter.geocode
-        case "REGIONS": return GMSPlacesAutocompleteTypeFilter.region
-        default : return GMSPlacesAutocompleteTypeFilter.noFilter
+        case "ADDRESS": return ["address"]
+        case "CITIES": return ["locality", "administrative_area_level_3"]
+        case "ESTABLISHMENT": return ["establishment"]
+        case "GEOCODE": return ["geocode"]
+        case "REGIONS": return [
+            "locality",
+            "sublocality",
+            "postal_code",
+            "country",
+            "administrative_area_level_1",
+            "administrative_area_level_2"
+        ]
+        default : return nil
         }
     }
     

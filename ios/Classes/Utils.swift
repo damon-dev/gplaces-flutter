@@ -7,7 +7,6 @@
 
 import Foundation
 import GooglePlaces
-import GoogleMapsBase
 
 struct JSONUtils {
     static func encode<T: Encodable>(object: T) -> String? {
@@ -52,7 +51,7 @@ struct PlaceDetailsUtils {
     }
     
     static private func viewPort(_ toSet: GMSPlace) -> MViewport? {
-        let data: GMSCoordinateBounds? = toSet.viewport
+        let data = toSet.viewportInfo
         
         return data == nil
         ? nil
