@@ -1,0 +1,29 @@
+// ignore_for_file: constant_identifier_names
+
+enum TypeFilter {
+  ADDRESS,
+  CITIES,
+  ESTABLISHMENT,
+  GEOCODE,
+  REGIONS,
+}
+
+enum Field {
+  ADDRESS,
+  ADDRESS_COMPONENTS,
+  BUSINESS_STATUS,
+  ID,
+  LAT_LNG,
+  NAME,
+  OPENING_HOURS,
+  PHONE_NUMBER,
+  PHOTO_METADATAS,
+  PLUS_CODE,
+  PRICE_LEVEL,
+  RATING,
+  TYPES,
+  UTC_OFFSET,
+  USER_RATINGS_TOTAL,
+  VIEWPORT,
+  WEBSITE_URI,
+}
