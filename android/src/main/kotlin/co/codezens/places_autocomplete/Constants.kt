@@ -11,20 +11,15 @@ object Methods {
     const val IS_INITIALIZED = "isInitialized"
     const val GET_PREDICTIONS = "get_predictions"
     const val GET_PLACE_DETAILS = "get_place_details"
+    const val GET_PLACE_PHOTO = "get_place_photo"
 }
 
 object Arguments {
     const val FIELDS = "fields"
     const val PLACE_ID = "placeId"
-    const val TYPE_FILTER = "typeFiler"
-    const val NORTH_EAST_LNG = "northEastLng"
-    const val NORTH_EAST_LAT = "northEastLat"
-    const val SOUTH_WEST_LNG = "southWestLng"
-    const val SOUTH_WEST_LAT = "southWestLat"
-    const val COUNTRIES = "countries"
-    const val QUERY = "query"
-    const val ORIGIN_LAT = "originLat"
-    const val ORIGIN_LNG = "originLng"
+
+    const val PREDICTIONS_REQUEST = "predictionsRequest"
+    const val PHOTO_REQUEST = "photoRequest"
 }
 
 object Defaults {

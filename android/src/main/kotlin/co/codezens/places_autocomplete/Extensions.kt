@@ -1,19 +1,17 @@
 package co.codezens.places_autocomplete
 
-import MViewport
+import MLocationBias
+import android.graphics.Bitmap
 import co.codezens.places_autocomplete.models.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import co.codezens.places_autocomplete.models.requests.PhotoRequest
+import co.codezens.places_autocomplete.models.requests.PredictionsRequest
 import com.google.android.libraries.places.api.model.Place.Field
-import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.model.TypeFilter
-import com.google.android.libraries.places.api.net.FetchPlaceRequest
-import com.google.android.libraries.places.api.net.FetchPlaceResponse
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
+import com.google.android.libraries.places.api.net.*
+import com.google.gson.Gson
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import java.io.ByteArrayOutputStream
 
 fun MethodChannel.Result.failure(msg: String) {
     error("error", msg, null)
@@ -71,9 +69,9 @@ fun Int.priceLevel(): String? {
     }
 }
 
-fun FetchPlaceResponse.viewport(): MViewport? {
+fun FetchPlaceResponse.viewport(): MLocationBias? {
     return place.viewport?.let {
-        MViewport(
+        MLocationBias(
             northeast = it.northeast, southwest = it.southwest
         )
     }
@@ -90,7 +88,10 @@ fun FetchPlaceResponse.plusCode(): MPlusCode? {
 fun FetchPlaceResponse.photoMetadatas(): List<MPhotoMetaData>? {
     return place.photoMetadatas?.map {
         MPhotoMetaData(
-            attributions = it.attributions, width = it.width, height = it.height
+            attributions = it.attributions,
+            width = it.width,
+            height = it.height,
+            photoReference = it.zza()
         )
     }
 }
@@ -127,43 +128,13 @@ fun FetchPlaceResponse.openingHours(): MOpeningHours? {
 }
 
 fun MethodCall.placesAutoCompleteRequest(): FindAutocompletePredictionsRequest {
-    val query = argument<String?>(Arguments.QUERY) ?: ""
-    val countries = argument<List<String>?>(Arguments.COUNTRIES)
+    val gson = Gson()
+    val mPredictionsRequest = gson.fromJson(
+        gson.toJson(argument<Map<String, Any?>>(Arguments.PREDICTIONS_REQUEST)),
+        PredictionsRequest::class.java
+    )
 
-    val southWestLat = argument<Double?>(Arguments.SOUTH_WEST_LAT)
-    val southWestLng = argument<Double?>(Arguments.SOUTH_WEST_LNG)
-    val northEastLat = argument<Double?>(Arguments.NORTH_EAST_LAT)
-    val northEastLng = argument<Double?>(Arguments.NORTH_EAST_LNG)
-    val bounds =
-        if (southWestLat == null || southWestLng == null || northEastLat == null || northEastLng == null) {
-            null
-        } else {
-            RectangularBounds.newInstance(
-                LatLngBounds(
-                    LatLng(southWestLat, southWestLng),
-                    LatLng(northEastLat, northEastLng),
-                )
-            )
-        }
-
-    val filter = argument<String?>(Arguments.TYPE_FILTER)
-
-    val originLat = argument<Double?>(Arguments.ORIGIN_LAT)
-    val originLng = argument<Double?>(Arguments.ORIGIN_LNG)
-    val origin = if (originLat == null || originLng == null) {
-        null
-    } else {
-        LatLng(originLat, originLng)
-    }
-
-    return FindAutocompletePredictionsRequest.builder().apply {
-        setQuery(query)
-        if (bounds != null) locationBias = bounds
-        if (countries != null) setCountries(countries)
-        if (filter != null) typeFilter = filter.typeFiler()
-        if (origin != null) setOrigin(origin)
-        sessionToken = AutocompleteSessionToken.newInstance()
-    }.build()
+    return mPredictionsRequest.createRequest()
 }
 
 fun FindAutocompletePredictionsResponse.predictions(): MPredictions {
@@ -177,6 +148,26 @@ fun FindAutocompletePredictionsResponse.predictions(): MPredictions {
     }
 
     return MPredictions(predictions = predictions)
+}
+
+fun MethodCall.createPhotoRequest(): FetchPhotoRequest {
+    val gson = Gson()
+    val data = argument<Map<String, Any?>>(Arguments.PHOTO_REQUEST)
+    val mPhotoRequest = gson.fromJson(
+        gson.toJson(data), PhotoRequest::class.java
+    )
+
+    return mPhotoRequest.createRequest()
+}
+
+fun FetchPhotoResponse.photoData(): MPlacePhoto {
+    return bitmap.let {
+        val stream = ByteArrayOutputStream()
+        it.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val bytes = stream.toByteArray()
+        bitmap.recycle()
+        MPlacePhoto(imageBytes = bytes)
+    }
 }
 
 fun String?.typeFiler(): TypeFilter? {

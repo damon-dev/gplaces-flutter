@@ -4,6 +4,8 @@ export 'package:places_autocomplete/src/models/address_components.dart';
 export 'package:places_autocomplete/src/models/fetch_place/fetch_place_request.dart';
 export 'package:places_autocomplete/src/models/fetch_place/fetch_place_response.dart';
 export 'package:places_autocomplete/src/models/fetch_place/place.dart';
+export 'package:places_autocomplete/src/models/fetch_photo/fetch_photo_request.dart';
+export 'package:places_autocomplete/src/models/fetch_photo/fetch_photo_response.dart';
 export 'package:places_autocomplete/src/models/find_autocomplete_predictions/autocomplete_prediction.dart';
 export 'package:places_autocomplete/src/models/find_autocomplete_predictions/find_autocomplete_predictions_request.dart';
 export 'package:places_autocomplete/src/models/find_autocomplete_predictions/find_autocomplete_predictions_response.dart';

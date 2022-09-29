@@ -17,7 +17,8 @@ class FetchPlaceRequest {
     this.placeFields,
   });
 
-  List<String>? get mappedFields {
-    return placeFields?.map((e) => e.name).toList();
-  }
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'placeId': placeId,
+        'fields': placeFields?.map((e) => e.name).toList(),
+      };
 }

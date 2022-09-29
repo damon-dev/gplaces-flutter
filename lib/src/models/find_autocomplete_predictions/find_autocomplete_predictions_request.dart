@@ -35,15 +35,14 @@ class FindAutocompletePredictionsRequest {
     this.typeFilter,
   });
 
-  Map<String, dynamic> get arguments => <String, dynamic>{
+  Map<String, dynamic> toJson() => <String, dynamic>{
         "query": query,
         "countries": countries,
         "typeFilter": typeFilter?.name,
-        "southWestLat": locationBias?.southwest?.latitude,
-        "southWestLng": locationBias?.southwest?.longitude,
-        "northEastLat": locationBias?.northeast?.latitude,
-        "northEastLng": locationBias?.northeast?.longitude,
-        "originLat": origin?.latitude,
-        "originLng": origin?.longitude,
+        "bounds": locationBias?.toJson(),
+        "origin": origin?.toJson(),
       };
+
+  Map<String, dynamic> get arguments =>
+      <String, dynamic>{"predictionsRequest": toJson()};
 }

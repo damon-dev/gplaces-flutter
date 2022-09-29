@@ -16,7 +16,8 @@ class Places {
     );
   }
 
-  static void initialize() async {
+  static void initialize({bool showLogs = true}) async {
+    _isLogsEnabled = showLogs;
     _methodChannel.invokeMethod('initialize').then((_) {
       _log("🚀🚀🚀 places initialized successfully");
     }).catchError((error) {
@@ -31,10 +32,6 @@ class Places {
       _errorLogs("⚠️⚠️⚠️ $error");
       return false;
     }
-  }
-
-  static void showLogs(bool toSet) {
-    _isLogsEnabled = toSet;
   }
 
   static void _log(message) {

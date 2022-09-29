@@ -37,12 +37,33 @@ class PlacesClient {
     required FetchPlaceRequest request,
   }) async {
     try {
-      final details = await _methodChannel.invokeMethod('get_place_details', {
-        'placeId': request.placeId,
-        'fields': request.mappedFields,
-      });
+      final details = await _methodChannel.invokeMethod(
+        'get_place_details',
+        request.toJson(),
+      );
       _log(details);
       return FetchPlaceResponse.parseResult(details);
+    } catch (error) {
+      _log(error);
+      return null;
+    }
+  }
+
+  ///Fetches a photo.
+  ///The photos service may cache the image data. If the
+  ///requested photo does not exist in the cache then a network
+  ///lookup will be performed.
+  Future<FetchPhotoResponse?> fetchPhotos({
+    required FetchPhotoRequest request,
+  }) async {
+    try {
+      final data = await _methodChannel.invokeMethod(
+        'get_place_photo',
+        request.arguments,
+      );
+      _log(data);
+
+      return FetchPhotoResponse.parseResult(data);
     } catch (error) {
       _log(error);
       return null;

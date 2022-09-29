@@ -9,8 +9,8 @@ class LocationBias {
   LatLng? southwest;
 
   LocationBias({
-    this.northeast,
     this.southwest,
+    this.northeast,
   });
 
   factory LocationBias.fromJson(Map<String, dynamic> json) {
@@ -25,7 +25,7 @@ class LocationBias {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'northeast': northeast,
-    'southwest': southwest,
+    'northeast': northeast?.toJson(),
+    'southwest': southwest?.toJson(),
   };
 }
