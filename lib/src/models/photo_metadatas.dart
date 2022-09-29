@@ -1,6 +1,13 @@
 class Metadata {
+  ///Returns the attributions that must be shown to the user
+  ///if this photo is displayed.
+  ///The attributions in HTML format, or an empty String if there are none.
   String? attributions;
+
+  ///Returns the maximum width in which this photo is available.
   int? width;
+
+  ///Returns the maximum height in which this photo is available.
   int? height;
 
   Metadata({

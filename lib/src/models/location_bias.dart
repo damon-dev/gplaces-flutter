@@ -1,16 +1,20 @@
-import 'lat_lng.dart';
+import 'package:places_autocomplete/src/models/lat_lng.dart';
 
-class Viewport {
+///[LocationBias] will favor results within the specified geographical bounds.
+class LocationBias {
+  ///Northeast corner of the bound.
   LatLng? northeast;
+
+  ///Southwest corner of the bound.
   LatLng? southwest;
 
-  Viewport({
+  LocationBias({
     this.northeast,
     this.southwest,
   });
 
-  factory Viewport.fromJson(Map<String, dynamic> json) {
-    return Viewport(
+  factory LocationBias.fromJson(Map<String, dynamic> json) {
+    return LocationBias(
       northeast: json["northeast"] == null
           ? null
           : LatLng.fromJson(json["northeast"] as Map<String, dynamic>),
@@ -21,7 +25,7 @@ class Viewport {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'northeast': northeast,
-        'southwest': southwest,
-      };
+    'northeast': northeast,
+    'southwest': southwest,
+  };
 }

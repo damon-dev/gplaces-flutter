@@ -28,4 +28,6 @@ struct Arguments {
     static let SOUTH_WEST_LAT = "southWestLat";
     static let COUNTRIES = "countries";
     static let QUERY = "query";
+    static let ORIGIN_LAT = "originLat"
+    static let ORIGIN_LNG = "originLng"
 }

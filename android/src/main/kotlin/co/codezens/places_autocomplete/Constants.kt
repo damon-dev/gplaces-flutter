@@ -23,6 +23,8 @@ object Arguments {
     const val SOUTH_WEST_LAT = "southWestLat"
     const val COUNTRIES = "countries"
     const val QUERY = "query"
+    const val ORIGIN_LAT = "originLat"
+    const val ORIGIN_LNG = "originLng"
 }
 
 object Defaults {

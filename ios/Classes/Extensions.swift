@@ -18,7 +18,6 @@ extension Dictionary<String, Any?> {
         let southWestLng = self[Arguments.SOUTH_WEST_LNG]  as? Double
         let northEastLat = self[Arguments.NORTH_EAST_LAT]  as? Double
         let northEastLng = self[Arguments.NORTH_EAST_LNG]  as? Double
-        
         let bounds =
         southWestLat == nil || southWestLng == nil || northEastLat == nil || northEastLng == nil
         ? nil
@@ -33,6 +32,15 @@ extension Dictionary<String, Any?> {
             )
         )
         
+        let originLat = self[Arguments.ORIGIN_LAT] as? Double
+        let originLng = self[Arguments.ORIGIN_LNG]  as? Double
+        let origin = originLat == nil || originLng == nil
+        ? nil
+        : CLLocation(
+            latitude: originLat!,
+            longitude: originLng!
+        )
+        
         let filter = GMSAutocompleteFilter()
         if(countries != nil) {
             filter.countries = countries
@@ -42,6 +50,9 @@ extension Dictionary<String, Any?> {
         }
         if(type != nil) {
             filter.types = type!.typeFiler()
+        }
+        if(origin  != nil) {
+            filter.origin = origin
         }
         
         return filter

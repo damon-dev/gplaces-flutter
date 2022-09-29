@@ -134,7 +134,6 @@ fun MethodCall.placesAutoCompleteRequest(): FindAutocompletePredictionsRequest {
     val southWestLng = argument<Double?>(Arguments.SOUTH_WEST_LNG)
     val northEastLat = argument<Double?>(Arguments.NORTH_EAST_LAT)
     val northEastLng = argument<Double?>(Arguments.NORTH_EAST_LNG)
-
     val bounds =
         if (southWestLat == null || southWestLng == null || northEastLat == null || northEastLng == null) {
             null
@@ -146,13 +145,23 @@ fun MethodCall.placesAutoCompleteRequest(): FindAutocompletePredictionsRequest {
                 )
             )
         }
+
     val filter = argument<String?>(Arguments.TYPE_FILTER)
+
+    val originLat = argument<Double?>(Arguments.ORIGIN_LAT)
+    val originLng = argument<Double?>(Arguments.ORIGIN_LNG)
+    val origin = if (originLat == null || originLng == null) {
+        null
+    } else {
+        LatLng(originLat, originLng)
+    }
 
     return FindAutocompletePredictionsRequest.builder().apply {
         setQuery(query)
         if (bounds != null) locationBias = bounds
         if (countries != null) setCountries(countries)
         if (filter != null) typeFilter = filter.typeFiler()
+        if (origin != null) setOrigin(origin)
         sessionToken = AutocompleteSessionToken.newInstance()
     }.build()
 }
