@@ -1,31 +1,22 @@
-package co.codezens.places_autocomplete
+package co.codezens.places_autocomplete.extensions
 
 import MLocationBias
-import android.graphics.Bitmap
+import co.codezens.places_autocomplete.Arguments
 import co.codezens.places_autocomplete.models.*
-import co.codezens.places_autocomplete.models.requests.PhotoRequest
-import co.codezens.places_autocomplete.models.requests.PredictionsRequest
-import com.google.android.libraries.places.api.model.Place.Field
-import com.google.android.libraries.places.api.model.TypeFilter
-import com.google.android.libraries.places.api.net.*
-import com.google.gson.Gson
+import co.codezens.places_autocomplete.models.requests.PlaceRequest
+import co.codezens.places_autocomplete.utils.GsonUtils
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
-import java.io.ByteArrayOutputStream
 
-fun MethodChannel.Result.failure(msg: String) {
-    error("error", msg, null)
-}
+fun MethodCall.placeDetailsRequest(): FetchPlaceRequest {
+    val mPlaceRequest = GsonUtils.convertFromJson(
+        argument<Map<String, Any?>>(Arguments.PLACE_REQUEST),
+        PlaceRequest::class.java
+    )
 
-fun MethodCall.placeDetailsRequest(result: MethodChannel.Result): FetchPlaceRequest? {
-    val placeId = argument<String?>(Arguments.PLACE_ID)
-    if (placeId == null) {
-        result.failure("place id can't be null")
-        return null
-    }
-
-    val fields = argument<List<String>?>(Arguments.FIELDS)
-    return FetchPlaceRequest.builder(placeId, fields.fields()).build()
+    return mPlaceRequest.createRequest()
 }
 
 fun FetchPlaceResponse.placeDetails(): MPlaceDetails {
@@ -127,65 +118,11 @@ fun FetchPlaceResponse.openingHours(): MOpeningHours? {
     }
 }
 
-fun MethodCall.placesAutoCompleteRequest(): FindAutocompletePredictionsRequest {
-    val gson = Gson()
-    val mPredictionsRequest = gson.fromJson(
-        gson.toJson(argument<Map<String, Any?>>(Arguments.PREDICTIONS_REQUEST)),
-        PredictionsRequest::class.java
-    )
-
-    return mPredictionsRequest.createRequest()
+fun field(value: String): Place.Field {
+    return Place.Field.valueOf(value)
 }
 
-fun FindAutocompletePredictionsResponse.predictions(): MPredictions {
-    val predictions = autocompletePredictions.map {
-        MPrediction(placeId = it.placeId,
-            distanceMeters = it.distanceMeters,
-            description = it.getFullText(null).toString(),
-            primaryText = it.getPrimaryText(null).toString(),
-            secondaryText = it.getSecondaryText(null).toString(),
-            types = it.placeTypes.map { type -> type.name })
-    }
-
-    return MPredictions(predictions = predictions)
-}
-
-fun MethodCall.createPhotoRequest(): FetchPhotoRequest {
-    val gson = Gson()
-    val data = argument<Map<String, Any?>>(Arguments.PHOTO_REQUEST)
-    val mPhotoRequest = gson.fromJson(
-        gson.toJson(data), PhotoRequest::class.java
-    )
-
-    return mPhotoRequest.createRequest()
-}
-
-fun FetchPhotoResponse.photoData(): MPlacePhoto {
-    return bitmap.let {
-        val stream = ByteArrayOutputStream()
-        it.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val bytes = stream.toByteArray()
-        bitmap.recycle()
-        MPlacePhoto(imageBytes = bytes)
-    }
-}
-
-fun String?.typeFiler(): TypeFilter? {
-    return this?.let { TypeFilter.valueOf(it) }
-}
-
-fun field(value: String): Field {
-    return Field.valueOf(value)
-}
-
-fun List<String>?.fields(): List<Field> {
-    return this?.map { value -> field(value) }?.toList()?.distinct() ?: Defaults.FIELDS
-}
-
-inline fun <R> safeCall(call: () -> R): Result<R> {
-    return try {
-        Result.success(call())
-    } catch (e: Exception) {
-        Result.failure(e)
-    }
+fun List<String>?.fields(): List<Place.Field> {
+    return this?.map { value -> field(value) }?.toList()?.distinct()
+        ?: Place.Field.values().asList()
 }

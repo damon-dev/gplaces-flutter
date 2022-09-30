@@ -4,6 +4,7 @@ import GooglePlaces
 
 public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
     private var placeClient: GMSPlacesClient?
+    private var lastPhotoMetadatas: [GMSPlacePhotoMetadata]?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: Channel.NAME, binaryMessenger: registrar.messenger())
@@ -13,10 +14,11 @@ public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case Methods.INITIALIZE: initialzePlaces(result: result);
-        case Methods.IS_INITIALIZED: isInitialized(result: result);
-        case Methods.GET_PREDICTIONS: getPredictions(call: call, result: result);
-        case Methods.GET_PLACE_DETAILS: getPlaceDetails(call: call, result: result);
+        case Methods.INITIALIZE: initialzePlaces(result: result)
+        case Methods.IS_INITIALIZED: isInitialized(result: result)
+        case Methods.GET_PREDICTIONS: getPredictions(call: call, result: result)
+        case Methods.GET_PLACE_DETAILS: getPlaceDetails(call: call, result: result)
+        case Methods.GET_PHOTO_DETAILS: getPlacePhoto(call: call, result: result)
         default:
             result(FlutterMethodNotImplemented);
         }
@@ -65,79 +67,97 @@ public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
     
     private func getPredictions(call: FlutterMethodCall,
                                 result: @escaping FlutterResult) {
-        let args = call.arguments as? Dictionary<String, Any?>
+        let args = call.arguments as! Dictionary<String, Any?>
+        let predictionRequest = args.predictionRequest
         
-        if(args == nil) {
-            let error = FlutterError.init(
-                code: "getPredictions",
-                message: "arguments can't be nil!!!",
-                details: nil
-            )
-            result(error)
-            
-            return
-        }
-        
-        let sessionToken = GMSAutocompleteSessionToken()
-        placeClient?.findAutocompletePredictions(
-            fromQuery: args!.predictionQuery(),
-            filter: args!.predictionsFilter(),
-            sessionToken: sessionToken,
-            callback: { (results, error) in
-                if let error = error {
-                    let error = FlutterError.init(
-                        code: "getPredictions",
-                        message: error.localizedDescription,
-                        details: nil
-                    )
-                    result(error)
+        if let request = predictionRequest {
+            let sessionToken = GMSAutocompleteSessionToken()
+            placeClient?.findAutocompletePredictions(
+                fromQuery: request.query,
+                filter: request.filter,
+                sessionToken: sessionToken,
+                callback: { (results, error) in
+                    if let error = error {
+                        let error = FlutterError.init(
+                            code: "getPredictions",
+                            message: error.localizedDescription,
+                            details: nil
+                        )
+                        result(error)
+                        
+                        return
+                    }
                     
-                    return
+                    if let results = results {
+                        result(results.predictions())
+                    }
                 }
-                
-                if let results = results {
-                    result(results.predictions())
-                }
-            }
-        );
+            );
+        }
     }
     
     private func getPlaceDetails(call: FlutterMethodCall,
                                  result: @escaping FlutterResult) {
-        let args = call.arguments as? Dictionary<String, Any?>
+        let args = call.arguments as! Dictionary<String, Any?>
+        let placeRequest = args.placeRequest
         
-        if(args == nil) {
-            let error = FlutterError.init(
-                code: "getPlaceDetails",
-                message: "arguments can't be nil!!!",
-                details: nil
-            )
-            result(error)
-            
-            return
-        }
-        
-        let sessionToken = GMSAutocompleteSessionToken()
-        placeClient?.fetchPlace(
-            fromPlaceID: args!.placeId(),
-            placeFields: args!.placeFields(),
-            sessionToken: sessionToken,
-            callback: { place, error in
-                if let error = error {
-                    let error = FlutterError.init(
-                        code: "getPlaceDetails",
-                        message: error.localizedDescription,
-                        details: nil
-                    )
-                    result(error)
+        if let request = placeRequest {
+            let sessionToken = GMSAutocompleteSessionToken()
+            placeClient?.fetchPlace(
+                fromPlaceID: request.placeId,
+                placeFields: request.gmsPlaceField,
+                sessionToken: sessionToken,
+                callback: { place, error in
+                    if let error = error {
+                        let error = FlutterError.init(
+                            code: "getPlaceDetails",
+                            message: error.localizedDescription,
+                            details: nil
+                        )
+                        result(error)
+                        
+                        return
+                    }
                     
-                    return
+                    if let place = place {
+                        self.lastPhotoMetadatas = place.photos
+                        result(PlaceDetailsUtils.placeDetails(place))
+                    }
                 }
-                
-                if let place = place {
-                    result(PlaceDetailsUtils.placeDetails(place))
-                }
+            )
+        }
+    }
+    
+    private func getPlacePhoto(call: FlutterMethodCall,
+                               result: @escaping FlutterResult) {
+        let args = call.arguments as! Dictionary<String, Any?>
+        let photoRequest = args.photoRequest
+        
+        if let request = photoRequest {
+            let metadata = request.metadata(self.lastPhotoMetadatas)
+            
+            if let metadata = metadata {
+                placeClient?.loadPlacePhoto(
+                    metadata,
+                    constrainedTo: request.constraints,
+                    scale: CGFloat(1.0),
+                    callback: { (image, error) in
+                        if let error = error {
+                            let error = FlutterError.init(
+                                code: "getPlacePhoto",
+                                message: error.localizedDescription,
+                                details: nil
+                            )
+                            
+                            result(error)
+                        }
+                        
+                        if let image = image {
+                            print(image)
+                            result(image.photoData())
+                        }
+                    })
             }
-        )
+        }
     }
 }

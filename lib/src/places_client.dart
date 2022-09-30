@@ -17,7 +17,7 @@ class PlacesClient {
   }) async {
     try {
       final predictions = await _methodChannel.invokeMethod(
-        'get_predictions',
+        'getPredictions',
         request.arguments,
       );
       _log(predictions);
@@ -38,8 +38,8 @@ class PlacesClient {
   }) async {
     try {
       final details = await _methodChannel.invokeMethod(
-        'get_place_details',
-        request.toJson(),
+        'getPlaceDetails',
+        request.arguments,
       );
       _log(details);
       return FetchPlaceResponse.parseResult(details);
@@ -58,7 +58,7 @@ class PlacesClient {
   }) async {
     try {
       final data = await _methodChannel.invokeMethod(
-        'get_place_photo',
+        'getPlacePhoto',
         request.arguments,
       );
       _log(data);

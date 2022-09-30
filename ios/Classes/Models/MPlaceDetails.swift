@@ -31,7 +31,7 @@ struct MPlaceDetail: Encodable {
     let types: [String]?
     let userRatingsTotal: UInt?
     let utcOffsetMinutes: Int?
-    let viewport: MViewport?
+    let viewport: MLocationBias?
     let websiteUri: String?
 }
 
@@ -65,10 +65,10 @@ struct MTime: Encodable {
     let minutes: UInt?
 }
 
-struct MPhotoMetaData: Encodable {
+struct MPhotoMetaData: Codable {
     let attributions: String?
-    let height: Int?
-    let width: Int?
+    let height: Int
+    let width: Int
 }
 
 struct MPlusCode: Encodable {
@@ -76,12 +76,12 @@ struct MPlusCode: Encodable {
     let globalCode: String?
 }
 
-struct MViewport: Encodable {
-    let northeast: MLatLng?
-    let southwest: MLatLng?
+struct MLocationBias: Codable {
+    let northeast: MLatLng
+    let southwest: MLatLng
 }
 
-struct MLatLng: Encodable {
-    let latitude: Double?
-    let longitude: Double?
+struct MLatLng: Codable {
+    let latitude: Double
+    let longitude: Double
 }

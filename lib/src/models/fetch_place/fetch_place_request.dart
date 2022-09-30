@@ -21,4 +21,8 @@ class FetchPlaceRequest {
         'placeId': placeId,
         'fields': placeFields?.map((e) => e.name).toList(),
       };
+
+  Map<String, dynamic> get arguments => <String, dynamic>{
+        'placeRequest': toJson(),
+      };
 }

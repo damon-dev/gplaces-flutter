@@ -21,7 +21,7 @@ class FindAutocompletePredictionsRequest {
   ///the results. This must be a list of ISO 3166-1 Alpha-2 country
   ///codes (case insensitive). If empty, country restrictions will
   ///not be applied.
-  final List<String>? countries;
+  final List<String> countries;
 
   ///Sets the filter that restricts the type of the results
   ///included in the response.
@@ -31,7 +31,7 @@ class FindAutocompletePredictionsRequest {
     required this.query,
     this.origin,
     this.locationBias,
-    this.countries,
+    this.countries = const [""],
     this.typeFilter,
   });
 

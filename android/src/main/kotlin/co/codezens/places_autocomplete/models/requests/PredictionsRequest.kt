@@ -1,7 +1,7 @@
 package co.codezens.places_autocomplete.models.requests
 
 import MLocationBias
-import co.codezens.places_autocomplete.typeFiler
+import co.codezens.places_autocomplete.extensions.typeFiler
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken

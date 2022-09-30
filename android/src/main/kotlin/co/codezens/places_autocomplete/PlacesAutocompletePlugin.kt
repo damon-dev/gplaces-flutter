@@ -2,6 +2,7 @@ package co.codezens.places_autocomplete
 
 import android.app.Activity
 import android.content.pm.PackageManager
+import co.codezens.places_autocomplete.extensions.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.gson.Gson
@@ -55,8 +56,7 @@ class PlacesAutocompletePlugin : FlutterPlugin, ActivityAware {
 
     private fun getPlaceDetails(call: MethodCall, result: MethodChannel.Result) {
         safeCall {
-            val request = call.placeDetailsRequest(result) ?: return
-            placesClient.fetchPlace(request)
+            placesClient.fetchPlace(call.placeDetailsRequest())
                 .addOnSuccessListener {
                     result.success(gson.toJson(it.placeDetails()))
                 }.addOnFailureListener {
