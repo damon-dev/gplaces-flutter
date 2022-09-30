@@ -2,6 +2,7 @@ package co.codezens.places_autocomplete
 
 import android.app.Activity
 import android.content.pm.PackageManager
+import co.codezens.places_autocomplete.extensions.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.gson.Gson
@@ -17,7 +18,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 class PlacesAutocompletePlugin : FlutterPlugin, ActivityAware {
     private var methodChannel: MethodChannel? = null
     private var activity: Activity? = null
-    private var placesClient: PlacesClient? = null
+    private lateinit var placesClient: PlacesClient
     private val gson = Gson()
 
     private val methodCallHandler = MethodCallHandler { call, result ->
@@ -26,6 +27,7 @@ class PlacesAutocompletePlugin : FlutterPlugin, ActivityAware {
             Methods.IS_INITIALIZED -> result.success(Places.isInitialized())
             Methods.GET_PREDICTIONS -> getPredictions(call, result)
             Methods.GET_PLACE_DETAILS -> getPlaceDetails(call, result)
+            Methods.GET_PLACE_PHOTO -> getPlacePhoto(call, result)
             else -> result.notImplemented()
         }
     }
@@ -42,20 +44,35 @@ class PlacesAutocompletePlugin : FlutterPlugin, ActivityAware {
     }
 
     private fun getPredictions(call: MethodCall, result: MethodChannel.Result) {
-        val request = call.placesAutoCompleteRequest()
-        placesClient?.findAutocompletePredictions(request)?.addOnSuccessListener {
-            result.success(gson.toJson(it.predictions()))
-        }?.addOnFailureListener {
-            result.failure(it.message ?: "Predictions error!!!")
+        safeCall {
+            placesClient.findAutocompletePredictions(call.placesAutoCompleteRequest())
+                .addOnSuccessListener {
+                    result.success(gson.toJson(it.predictions()))
+                }.addOnFailureListener {
+                    result.failure(it.message ?: "Predictions error!!!")
+                }
         }
     }
 
     private fun getPlaceDetails(call: MethodCall, result: MethodChannel.Result) {
-        val request = call.placeDetailsRequest(result) ?: return
-        placesClient?.fetchPlace(request)?.addOnSuccessListener {
-            result.success(gson.toJson(it.placeDetails()))
-        }?.addOnFailureListener {
-            result.failure(it.message ?: "Place Details error!!!")
+        safeCall {
+            placesClient.fetchPlace(call.placeDetailsRequest())
+                .addOnSuccessListener {
+                    result.success(gson.toJson(it.placeDetails()))
+                }.addOnFailureListener {
+                    result.failure(it.message ?: "Place Details error!!!")
+                }
+        }
+    }
+
+    private fun getPlacePhoto(call: MethodCall, result: MethodChannel.Result) {
+        safeCall {
+            placesClient.fetchPhoto(call.createPhotoRequest())
+                .addOnSuccessListener {
+                    result.success(gson.toJson(it.photoData()))
+                }.addOnFailureListener {
+                    result.failure(it.message ?: "Place Photo error!!!")
+                }
         }
     }
 

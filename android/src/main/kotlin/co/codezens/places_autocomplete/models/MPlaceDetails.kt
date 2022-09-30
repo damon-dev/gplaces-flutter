@@ -1,6 +1,6 @@
 package co.codezens.places_autocomplete.models
 
-import MViewport
+import MLocationBias
 import com.google.android.gms.maps.model.LatLng
 
 data class MPlaceDetails(
@@ -27,6 +27,6 @@ data class MPlaceDetail(
     val types: List<String>?,
     val userRatingsTotal: Int?,
     val utcOffsetMinutes: Int?,
-    val viewport: MViewport?,
+    val viewport: MLocationBias?,
     val websiteUri: String?,
 )

@@ -1,13 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-enum TypeFilter {
-  ADDRESS,
-  CITIES,
-  ESTABLISHMENT,
-  GEOCODE,
-  REGIONS,
-}
-
 enum Field {
   ADDRESS,
   ADDRESS_COMPONENTS,

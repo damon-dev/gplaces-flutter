@@ -10,57 +10,16 @@ import GooglePlaces
 
 extension Dictionary<String, Any?> {
     
-    func predictionsFilter() -> GMSAutocompleteFilter {
-        let countries =  self[Arguments.COUNTRIES] as? [String]
-        let type = self[Arguments.TYPE_FILTER] as? String
-        
-        let southWestLat = self[Arguments.SOUTH_WEST_LAT]  as? Double
-        let southWestLng = self[Arguments.SOUTH_WEST_LNG]  as? Double
-        let northEastLat = self[Arguments.NORTH_EAST_LAT]  as? Double
-        let northEastLng = self[Arguments.NORTH_EAST_LNG]  as? Double
-        
-        let bounds =
-        southWestLat == nil || southWestLng == nil || northEastLat == nil || northEastLng == nil
-        ? nil
-        : GMSPlaceRectangularLocationOption(
-            CLLocationCoordinate2D(
-                latitude: northEastLat!,
-                longitude: northEastLng!
-            ),
-            CLLocationCoordinate2D(
-                latitude: southWestLat!,
-                longitude: southWestLng!
-            )
-        )
-        
-        let filter = GMSAutocompleteFilter()
-        if(countries != nil) {
-            filter.countries = countries
-        }
-        if(bounds != nil) {
-            filter.locationBias = bounds
-        }
-        if(type != nil) {
-            filter.types = type!.typeFiler()
-        }
-        
-        return filter
+    var predictionRequest: PredictionsRequest? {
+        return JSONUtils.decode(self[Arguments.PREDICTIONS_REQUEST] as! [String: Any?])
     }
     
-    func predictionQuery() -> String {
-        return self[Arguments.QUERY] as! String
+    var placeRequest: PlaceRequest? {
+        return JSONUtils.decode(self[Arguments.PLACE_REQUEST] as! [String: Any?])
     }
     
-    func placeId() -> String {
-        return self[Arguments.PLACE_ID] as! String
-    }
-    
-    func placeFields() -> GMSPlaceField {
-        let fields = self[Arguments.FIELDS] as? [String]
-        
-        return fields == nil
-        ? GMSPlaceField(arrayLiteral: GMSPlaceField.all)
-        : GMSPlaceField(fields!.fields())
+    var photoRequest: PhotoRequest? {
+        return JSONUtils.decode(self[Arguments.PHOTO_REQUEST] as! [String: Any?])
     }
 }
 
@@ -206,5 +165,21 @@ extension NSAttributedString {
         }
         
         return nil
+    }
+}
+
+extension UIImage {
+    func photoData() -> String? {
+        let imageData = self.pngData() as NSData?
+        let count = (imageData?.count ?? 0) / MemoryLayout<Int8>.size
+        var bytes = [UInt8](repeating: 0, count: count)
+        imageData?.getBytes(&bytes, length:count * MemoryLayout<Int8>.size)
+        var byteArray: Array = Array<UInt8>()
+        
+        for i in 0 ..< count {
+            byteArray.append(bytes[i])
+        }
+        
+        return JSONUtils.encode(object: MPlacePhoto(imageBytes: byteArray))
     }
 }

@@ -19,6 +19,15 @@ struct JSONUtils {
         
         return String(data: data, encoding: .utf8)
     }
+    
+    static func decode<T: Decodable>(_ toDecode: Any) -> T? {
+        guard let json = try? JSONSerialization.data(withJSONObject: toDecode) else {
+            return nil
+        }
+        
+        let decoder = JSONDecoder()
+        return try? decoder.decode(T.self, from: json)
+    }
 }
 
 struct PlaceDetailsUtils {
@@ -50,12 +59,12 @@ struct PlaceDetailsUtils {
         return JSONUtils.encode(object: MPlaceDetails(details: details))
     }
     
-    static private func viewPort(_ toSet: GMSPlace) -> MViewport? {
+    static private func viewPort(_ toSet: GMSPlace) -> MLocationBias? {
         let data = toSet.viewportInfo
         
         return data == nil
         ? nil
-        : MViewport(
+        : MLocationBias(
             northeast: MLatLng(
                 latitude: data!.northEast.latitude,
                 longitude: data!.northEast.longitude
@@ -104,7 +113,7 @@ struct PlaceDetailsUtils {
     
     static private func mPeriods(_ toSet: [GMSPeriod]?) -> [MPeriod]? {
         if let toSet {
-           return toSet.map({ period in
+            return toSet.map({ period in
                 MPeriod(
                     open: MTimeOfWeek(
                         day: period.openEvent.day.name,

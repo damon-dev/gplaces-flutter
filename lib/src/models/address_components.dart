@@ -17,8 +17,13 @@ class AddressComponents {
 }
 
 class AddressComponent {
+  ///Name of the address component, e.g. "Sydney".
   String? name;
+
+  ///Short name of the address component, e.g. "AU".
   String? shortName;
+
+  ///Types of the [AddressComponent].
   List<String>? types;
 
   AddressComponent({

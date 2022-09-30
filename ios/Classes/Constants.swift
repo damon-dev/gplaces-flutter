@@ -14,18 +14,13 @@ struct Channel {
 struct Methods {
     static let INITIALIZE = "initialize";
     static let IS_INITIALIZED = "isInitialized";
-    static let GET_PREDICTIONS = "get_predictions";
-    static let GET_PLACE_DETAILS = "get_place_details";
+    static let GET_PREDICTIONS = "getPredictions";
+    static let GET_PLACE_DETAILS = "getPlaceDetails";
+    static let GET_PHOTO_DETAILS = "getPlacePhoto";
 }
 
 struct Arguments {
-    static let FIELDS = "fields";
-    static let PLACE_ID = "placeId";
-    static let TYPE_FILTER = "typeFiler";
-    static let NORTH_EAST_LNG = "northEastLng";
-    static let NORTH_EAST_LAT = "northEastLat";
-    static let SOUTH_WEST_LNG = "southWestLng";
-    static let SOUTH_WEST_LAT = "southWestLat";
-    static let COUNTRIES = "countries";
-    static let QUERY = "query";
+    static let PREDICTIONS_REQUEST = "predictionsRequest"
+    static let PLACE_REQUEST = "placeRequest"
+    static let PHOTO_REQUEST = "photoRequest"
 }

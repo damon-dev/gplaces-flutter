@@ -1,16 +1,16 @@
 class LatLng {
-  double? latitude;
-  double? longitude;
+  double latitude;
+  double longitude;
 
   LatLng({
-    this.latitude,
-    this.longitude,
+    required this.latitude,
+    required this.longitude,
   });
 
   factory LatLng.fromJson(Map<String, dynamic> json) {
     return LatLng(
-      latitude: json["latitude"] as double?,
-      longitude: json["longitude"] as double?,
+      latitude: json["latitude"] as double,
+      longitude: json["longitude"] as double,
     );
   }
 

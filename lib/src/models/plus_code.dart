@@ -1,5 +1,8 @@
 class PlusCode {
+  ///Returns the compound plus code, e.g. "9G8F+5W Zurich, Switzerland".
   String? compoundCode;
+
+  ///Returns the geo plus code, e.g. "8FVC9G8F+5W".
   String? globalCode;
 
   PlusCode({
