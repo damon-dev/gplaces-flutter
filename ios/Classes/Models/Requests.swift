@@ -84,3 +84,12 @@ struct PhotoRequest: Decodable {
         )
     }
 }
+
+//current place
+struct CurrentPlaceRequest: Decodable {
+    let fields: [String]
+    
+    var gmsPlaceField : GMSPlaceField {
+        return GMSPlaceField(fields.fields())
+    }
+}

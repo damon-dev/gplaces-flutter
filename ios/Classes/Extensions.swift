@@ -21,6 +21,10 @@ extension Dictionary<String, Any?> {
     var photoRequest: PhotoRequest? {
         return JSONUtils.decode(self[Arguments.PHOTO_REQUEST] as! [String: Any?])
     }
+    
+    var currentPlaceRequest: CurrentPlaceRequest? {
+        return JSONUtils.decode(self[Arguments.CURRENT_PLACE_REQUEST] as! [String: Any?])
+    }
 }
 
 extension [GMSAutocompletePrediction] {
@@ -181,5 +185,18 @@ extension UIImage {
         }
         
         return JSONUtils.encode(object: MPlacePhoto(imageBytes: byteArray))
+    }
+}
+
+extension [GMSPlaceLikelihood] {
+    func currentPlaceData() -> String? {
+        let likelihoods = self.map { data in
+            MPlaceLikelihood(
+                likelihood: data.likelihood,
+                place: PlaceDetailsUtils.placeDetails(data.place)
+            )
+        }
+        
+        return JSONUtils.encode(object: MCurrentPlace(placeLikelihoods: likelihoods))
     }
 }

@@ -1,6 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:places_autocomplete/places_autocomplete.dart';
+import 'package:places_autocomplete/src/models/fetch_photo/fetch_photo_request.dart';
+import 'package:places_autocomplete/src/models/fetch_photo/fetch_photo_response.dart';
+import 'package:places_autocomplete/src/models/fetch_place/fetch_place_request.dart';
+import 'package:places_autocomplete/src/models/fetch_place/fetch_place_response.dart';
+import 'package:places_autocomplete/src/models/find_autocomplete_predictions/find_autocomplete_predictions_request.dart';
+import 'package:places_autocomplete/src/models/find_autocomplete_predictions/find_autocomplete_predictions_response.dart';
 import 'package:places_autocomplete/src/models/find_current_place/find_current_place_request.dart';
 import 'package:places_autocomplete/src/models/find_current_place/find_current_place_response.dart';
 

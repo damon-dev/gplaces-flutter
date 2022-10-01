@@ -19,6 +19,7 @@ public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
         case Methods.GET_PREDICTIONS: getPredictions(call: call, result: result)
         case Methods.GET_PLACE_DETAILS: getPlaceDetails(call: call, result: result)
         case Methods.GET_PHOTO_DETAILS: getPlacePhoto(call: call, result: result)
+        case Methods.GET_CURRENT_PLACE: getCurrentPlace(call: call, result: result)
         default:
             result(FlutterMethodNotImplemented);
         }
@@ -90,9 +91,13 @@ public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
                     
                     if let results = results {
                         result(results.predictions())
+                    } else {
+                        result(nil)
                     }
                 }
             );
+        } else {
+            result(nil)
         }
     }
     
@@ -121,10 +126,14 @@ public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
                     
                     if let place = place {
                         self.lastPhotoMetadatas = place.photos
-                        result(PlaceDetailsUtils.placeDetails(place))
+                        result(PlaceDetailsUtils.placeDetailData(place))
+                    } else {
+                        result(nil)
                     }
                 }
             )
+        } else {
+            result(nil)
         }
     }
     
@@ -153,11 +162,44 @@ public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
                         }
                         
                         if let image = image {
-                            print(image)
                             result(image.photoData())
+                        } else {
+                            result(nil)
                         }
                     })
+            } else {
+                result(nil)
             }
+        }
+    }
+    
+    private func getCurrentPlace(call: FlutterMethodCall,
+                                 result: @escaping FlutterResult) {
+        let args = call.arguments as! Dictionary<String, Any?>
+        let currentPlaceRequest = args.currentPlaceRequest
+        
+        if let request = currentPlaceRequest {
+            placeClient?.findPlaceLikelihoodsFromCurrentLocation(
+                withPlaceFields: request.gmsPlaceField,
+                callback: { results, error in
+                    if let error = error {
+                        let error = FlutterError.init(
+                            code: "getCurrentPlace",
+                            message: error.localizedDescription,
+                            details: nil
+                        )
+                        
+                        result(error)
+                    }
+                    
+                    if let results = results {
+                        result(results.currentPlaceData())
+                    } else {
+                        result(nil)
+                    }
+                })
+        } else {
+            result(nil)
         }
     }
 }

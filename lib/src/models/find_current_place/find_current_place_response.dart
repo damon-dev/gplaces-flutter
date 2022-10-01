@@ -21,7 +21,6 @@ class FindCurrentPlaceResponse {
 
   static FindCurrentPlaceResponse parseResult(String responseBody) {
     final parsed = json.decode(responseBody).cast<String, dynamic>();
-    print(parsed);
     return FindCurrentPlaceResponse.fromJson(parsed);
   }
 }

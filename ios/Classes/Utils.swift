@@ -31,8 +31,12 @@ struct JSONUtils {
 }
 
 struct PlaceDetailsUtils {
-    static func placeDetails(_ toSet: GMSPlace) -> String? {
-        let details = MPlaceDetail(
+    static func placeDetailData(_ toSet: GMSPlace) -> String? {
+        return JSONUtils.encode(object: MPlaceDetails(details: placeDetails(toSet)))
+    }
+    
+    static func placeDetails(_ toSet: GMSPlace) -> MPlaceDetail {
+        return MPlaceDetail(
             address: toSet.formattedAddress,
             attributions: mAttributions(toSet),
             addressComponents: mAddressComponents(toSet),
@@ -55,8 +59,6 @@ struct PlaceDetailsUtils {
             viewport: viewPort(toSet),
             websiteUri: toSet.website?.absoluteString
         )
-        
-        return JSONUtils.encode(object: MPlaceDetails(details: details))
     }
     
     static private func viewPort(_ toSet: GMSPlace) -> MLocationBias? {
