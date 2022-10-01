@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:places_autocomplete/places_autocomplete.dart';
+import 'package:places_autocomplete/src/models/find_current_place/find_current_place_request.dart';
+import 'package:places_autocomplete/src/models/find_current_place/find_current_place_response.dart';
 
 class PlacesClient {
   final MethodChannel _methodChannel;
@@ -64,6 +66,31 @@ class PlacesClient {
       _log(data);
 
       return FetchPhotoResponse.parseResult(data);
+    } catch (error) {
+      _log(error);
+      return null;
+    }
+  }
+
+  ///Fetches the approximate current location of the user's device.
+  ///The device must have Location Services enabled, and the app
+  /// must have the following permissions granted.
+  ///ACCESS_FINE_LOCATION && ACCESS_WIFI_STATE.
+  ///Calling this method without granting this permission will
+  ///result in a SecurityException being thrown.
+  ///This API assumes Fused Location Provider is available on
+  ///the device, in order to retrieve it's current location.
+  Future<FindCurrentPlaceResponse?> findCurrentPlace({
+    required FindCurrentPlaceRequest request,
+  }) async {
+    try {
+      final data = await _methodChannel.invokeMethod(
+        'getCurrentPlace',
+        request.arguments,
+      );
+      _log(data);
+
+      return FindCurrentPlaceResponse.parseResult(data);
     } catch (error) {
       _log(error);
       return null;

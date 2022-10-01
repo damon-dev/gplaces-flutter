@@ -10,10 +10,12 @@ object Methods {
     const val GET_PREDICTIONS = "getPredictions"
     const val GET_PLACE_DETAILS = "getPlaceDetails"
     const val GET_PLACE_PHOTO = "getPlacePhoto"
+    const val GET_CURRENT_PLACE = "getCurrentPlace"
 }
 
 object Arguments {
     const val PREDICTIONS_REQUEST = "predictionsRequest"
     const val PLACE_REQUEST = "placeRequest"
     const val PHOTO_REQUEST = "photoRequest"
+    const val CURRENT_PLACE_REQUEST = "currentPlaceRequest"
 }

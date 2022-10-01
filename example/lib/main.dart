@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:places_autocomplete/places_autocomplete.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final List<AutocompletePrediction> _autocompletePredictions = [];
+  final List<PlaceLikelihood> _placeLikelihoods = [];
   Uint8List? _imageBytes;
   late PlacesClient _placesClient;
 
@@ -47,18 +49,35 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16),
-                    child:
-                        Text("${_autocompletePredictions[index].description}"),
-                  );
-                },
-                itemCount: _autocompletePredictions.length,
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
+              child: Stack(
+                children: [
+                  ListView.separated(
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                            "${_autocompletePredictions[index].description}"),
+                      );
+                    },
+                    itemCount: _autocompletePredictions.length,
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                  ),
+                  ListView.separated(
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                            "(${_placeLikelihoods[index].likelihood?.toStringAsFixed(2)}): ${_placeLikelihoods[index].place?.address}"),
+                      );
+                    },
+                    itemCount: _placeLikelihoods.length,
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                  ),
+                ],
               ),
             ),
           ],
@@ -90,8 +109,8 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Future fetchPhoto() async {
-    final placeResponse = await fetchPlace();
+  Future fetchPhoto(String placeId) async {
+    final placeResponse = await fetchPlace(placeId);
     final metaData = placeResponse?.place?.photoMetadatas;
     if (await Places.isInitialized && metaData != null && metaData.isNotEmpty) {
       final request = FetchPhotoRequest(photoMetaData: metaData[0]);
@@ -103,10 +122,10 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Future<FetchPlaceResponse?> fetchPlace() async {
+  Future<FetchPlaceResponse?> fetchPlace(String placeId) async {
     if (await Places.isInitialized) {
       final request = FetchPlaceRequest(
-        placeId: 'ChIJHZyasTQBoDkRj53m5ZpLdSM',
+        placeId: placeId,
         placeFields: [Field.PHOTO_METADATAS],
       );
 
@@ -116,10 +135,29 @@ class _MyAppState extends State<MyApp> {
     return null;
   }
 
+  Future findCurrentPlace() async {
+    if (await _permissionsGranted && await Places.isInitialized) {
+      final request = FindCurrentPlaceRequest(
+          placeFields: [Field.ADDRESS, Field.PHOTO_METADATAS, Field.ID]);
+      _placesClient.findCurrentPlace(request: request).then((response) {
+        setState(() {
+          _placeLikelihoods.addAll(response?.placeLikelihoods ?? []);
+        });
+      });
+    }
+  }
+
   Future _setupClient() async {
     Places.initialize(showLogs: true);
     _placesClient = Places.createClient();
-    fetchAutocompletePredictions();
-    fetchPhoto();
+    //fetchPlace("ChIJHZyasTQBoDkRj53m5ZpLdSM");
+    //fetchAutocompletePredictions();
+    fetchPhoto("ChIJHZyasTQBoDkRj53m5ZpLdSM");
+    findCurrentPlace();
+  }
+
+  Future<bool> get _permissionsGranted async {
+    return await Permission.locationWhenInUse.request().isGranted ||
+        await Permission.locationAlways.request().isGranted;
   }
 }

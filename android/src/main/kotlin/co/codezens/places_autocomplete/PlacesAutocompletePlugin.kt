@@ -1,8 +1,10 @@
 package co.codezens.places_autocomplete
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import co.codezens.places_autocomplete.extensions.*
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.gson.Gson
@@ -28,6 +30,7 @@ class PlacesAutocompletePlugin : FlutterPlugin, ActivityAware {
             Methods.GET_PREDICTIONS -> getPredictions(call, result)
             Methods.GET_PLACE_DETAILS -> getPlaceDetails(call, result)
             Methods.GET_PLACE_PHOTO -> getPlacePhoto(call, result)
+            Methods.GET_CURRENT_PLACE -> getCurrentPlace(call, result)
             else -> result.notImplemented()
         }
     }
@@ -48,31 +51,32 @@ class PlacesAutocompletePlugin : FlutterPlugin, ActivityAware {
             placesClient.findAutocompletePredictions(call.placesAutoCompleteRequest())
                 .addOnSuccessListener {
                     result.success(gson.toJson(it.predictions()))
-                }.addOnFailureListener {
-                    result.failure(it.message ?: "Predictions error!!!")
-                }
+                }.addOnFailureListener(onFailureListener(result))
         }
     }
 
     private fun getPlaceDetails(call: MethodCall, result: MethodChannel.Result) {
         safeCall {
-            placesClient.fetchPlace(call.placeDetailsRequest())
-                .addOnSuccessListener {
-                    result.success(gson.toJson(it.placeDetails()))
-                }.addOnFailureListener {
-                    result.failure(it.message ?: "Place Details error!!!")
-                }
+            placesClient.fetchPlace(call.placeDetailsRequest()).addOnSuccessListener {
+                result.success(gson.toJson(it.placeDetails()))
+            }.addOnFailureListener(onFailureListener(result))
         }
     }
 
     private fun getPlacePhoto(call: MethodCall, result: MethodChannel.Result) {
         safeCall {
-            placesClient.fetchPhoto(call.createPhotoRequest())
-                .addOnSuccessListener {
-                    result.success(gson.toJson(it.photoData()))
-                }.addOnFailureListener {
-                    result.failure(it.message ?: "Place Photo error!!!")
-                }
+            placesClient.fetchPhoto(call.createPhotoRequest()).addOnSuccessListener {
+                result.success(gson.toJson(it.photoData()))
+            }.addOnFailureListener(onFailureListener(result))
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getCurrentPlace(call: MethodCall, result: MethodChannel.Result) {
+        safeCall {
+            placesClient.findCurrentPlace(call.findCurrentPlaceRequest()).addOnSuccessListener {
+                result.success(gson.toJson(it.currentPlaceData()))
+            }.addOnFailureListener(onFailureListener(result))
         }
     }
 
@@ -80,12 +84,15 @@ class PlacesAutocompletePlugin : FlutterPlugin, ActivityAware {
         safeCall {
             val context = activity.applicationContext
             return context.packageManager.getApplicationInfo(
-                context.packageName,
-                PackageManager.GET_META_DATA
+                context.packageName, PackageManager.GET_META_DATA
             ).run { metaData.getString("com.google.android.geo.API_KEY") }
         }
 
         return null
+    }
+
+    private fun onFailureListener(result: MethodChannel.Result) = OnFailureListener {
+        result.failure("${it.message}")
     }
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
