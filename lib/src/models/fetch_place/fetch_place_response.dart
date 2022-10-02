@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:places_autocomplete/src/models/fetch_place/place.dart';
+import 'package:gplaces/src/models/fetch_place/place.dart';
 
 /// The FetchPlaceResponse contains [Place]
 class FetchPlaceResponse {
@@ -24,4 +24,11 @@ class FetchPlaceResponse {
     final parsed = json.decode(responseBody).cast<String, dynamic>();
     return FetchPlaceResponse.fromJson(parsed);
   }
+
+  @override
+  bool operator ==(other) =>
+      other is FetchPlaceResponse && other.place == place;
+
+  @override
+  int get hashCode => place.hashCode;
 }

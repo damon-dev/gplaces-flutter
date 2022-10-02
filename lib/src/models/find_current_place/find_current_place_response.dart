@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:places_autocomplete/src/models/find_current_place/place_likelihood.dart';
+import 'package:collection/collection.dart';
+import 'package:gplaces/src/models/find_current_place/place_likelihood.dart';
 
 class FindCurrentPlaceResponse {
   final List<PlaceLikelihood>? placeLikelihoods;
@@ -23,4 +24,12 @@ class FindCurrentPlaceResponse {
     final parsed = json.decode(responseBody).cast<String, dynamic>();
     return FindCurrentPlaceResponse.fromJson(parsed);
   }
+
+  @override
+  bool operator ==(other) =>
+      other is FindCurrentPlaceResponse &&
+      const ListEquality().equals(other.placeLikelihoods, placeLikelihoods);
+
+  @override
+  int get hashCode => placeLikelihoods.hashCode;
 }

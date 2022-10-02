@@ -8,7 +8,7 @@
 import Foundation
 
 struct MPredictions: Encodable {
-    let predictions: [MPrediction]?
+    let autocompletePredictions: [MPrediction]?
 }
 
 struct MPrediction: Encodable {

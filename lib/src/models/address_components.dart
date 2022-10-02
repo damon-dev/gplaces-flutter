@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 class AddressComponents {
   List<AddressComponent>? asList;
 
@@ -14,6 +16,14 @@ class AddressComponents {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'asList': asList,
       };
+
+  @override
+  bool operator ==(other) =>
+      other is AddressComponents &&
+      const ListEquality().equals(other.asList, asList);
+
+  @override
+  int get hashCode => asList.hashCode;
 }
 
 class AddressComponent {
@@ -46,4 +56,14 @@ class AddressComponent {
         'shortName': shortName,
         'types': types,
       };
+
+  @override
+  bool operator ==(other) =>
+      other is AddressComponent &&
+      other.name == name &&
+      other.shortName == shortName &&
+      const ListEquality().equals(other.types, types);
+
+  @override
+  int get hashCode => name.hashCode ^ types.hashCode ^ shortName.hashCode;
 }

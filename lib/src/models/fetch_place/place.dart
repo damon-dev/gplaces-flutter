@@ -1,7 +1,7 @@
-import 'package:places_autocomplete/src/models/lat_lng.dart';
-import 'package:places_autocomplete/src/models/location_bias.dart';
-import 'package:places_autocomplete/src/models/photo_metadatas.dart';
-import 'package:places_autocomplete/src/models/plus_code.dart';
+import 'package:gplaces/src/models/lat_lng.dart';
+import 'package:gplaces/src/models/location_bias.dart';
+import 'package:gplaces/src/models/photo_metadatas.dart';
+import 'package:gplaces/src/models/plus_code.dart';
 
 import '../address_components.dart';
 import '../opening_hours.dart';
@@ -219,4 +219,53 @@ class Place {
         'viewport': viewport,
         'websiteUri': websiteUri,
       };
+
+  @override
+  bool operator ==(other) =>
+      other is Place &&
+      other.address == address &&
+      other.addressComponents == addressComponents &&
+      other.attributions == attributions &&
+      other.businessStatus == businessStatus &&
+      other.id == id &&
+      other.iconUrl == other.iconUrl &&
+      other.isOpen == isOpen &&
+      other.iconBackgroundColor == iconBackgroundColor &&
+      other.latLng == latLng &&
+      other.name == name &&
+      other.openingHours == openingHours &&
+      other.photoMetadatas == photoMetadatas &&
+      other.phoneNumber == phoneNumber &&
+      other.plusCode == plusCode &&
+      other.priceLevel == priceLevel &&
+      other.rating == rating &&
+      other.types == types &&
+      other.utcOffsetMinutes == utcOffsetMinutes &&
+      other.userRatingsTotal == userRatingsTotal &&
+      other.viewport == viewport &&
+      other.websiteUri == websiteUri;
+
+  @override
+  int get hashCode =>
+      address.hashCode ^
+      addressComponents.hashCode ^
+      attributions.hashCode ^
+      businessStatus.hashCode ^
+      id.hashCode ^
+      isOpen.hashCode ^
+      iconUrl.hashCode ^
+      iconBackgroundColor.hashCode ^
+      latLng.hashCode ^
+      name.hashCode ^
+      openingHours.hashCode ^
+      priceLevel.hashCode ^
+      plusCode.hashCode ^
+      phoneNumber.hashCode ^
+      photoMetadatas.hashCode ^
+      rating.hashCode ^
+      types.hashCode ^
+      userRatingsTotal.hashCode ^
+      utcOffsetMinutes.hashCode ^
+      viewport.hashCode ^
+      websiteUri.hashCode;
 }

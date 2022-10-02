@@ -1,13 +1,13 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint places_autocomplete.podspec` to validate before publishing.
+# Run `pod lib lint gplaces.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'places_autocomplete'
+  s.name             = 'gplaces'
   s.version          = '0.0.1'
-  s.summary          = 'A new Flutter plugin for handle google place api that place search and details and photos and autocomplete and query autocomplete requests are available'
+  s.summary          = "GPlaces provides programmatic access to Google's database of local place and business information, as well as the device's current place."
   s.description      = <<-DESC
-'A new Flutter plugin for handle google place api that place search and details and photos and autocomplete and query autocomplete requests are available'
+  "GPlaces provides programmatic access to Google's database of local place and business information, as well as the device's current place."
                        DESC
   s.homepage         = 'https://github.com/19diwakar'
   s.license          = { :file => '../LICENSE' }

@@ -1,6 +1,6 @@
-import 'package:places_autocomplete/src/constants/type_filter.dart';
-import 'package:places_autocomplete/src/models/lat_lng.dart';
-import 'package:places_autocomplete/src/models/location_bias.dart';
+import 'package:gplaces/src/constants/type_filter.dart';
+import 'package:gplaces/src/models/lat_lng.dart';
+import 'package:gplaces/src/models/location_bias.dart';
 
 class FindAutocompletePredictionsRequest {
   ///Sets the user [query] string used to generate autocomplete

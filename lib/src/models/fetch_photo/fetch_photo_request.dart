@@ -1,4 +1,4 @@
-import 'package:places_autocomplete/src/models/photo_metadatas.dart';
+import 'package:gplaces/src/models/photo_metadatas.dart';
 
 class FetchPhotoRequest {
   ///The [photoMetadata] of the image returned by the Place Photos service.

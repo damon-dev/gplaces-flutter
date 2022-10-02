@@ -1,4 +1,4 @@
-import 'package:places_autocomplete/src/models/fetch_place/place.dart';
+import 'package:gplaces/src/models/fetch_place/place.dart';
 
 class PlaceLikelihood {
   ///Returns a value indicating the degree of confidence that
@@ -22,4 +22,13 @@ class PlaceLikelihood {
         'likelihood': likelihood,
         'place': place,
       };
+
+  @override
+  bool operator ==(other) =>
+      other is PlaceLikelihood &&
+      other.place == place &&
+      other.likelihood == likelihood;
+
+  @override
+  int get hashCode => place.hashCode ^ likelihood.hashCode;
 }

@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 class OpeningHours {
   ///a list of Period objects that provide more detailed information
   ///that is equivalent to the data provided by [weeklyText]
@@ -29,6 +31,15 @@ class OpeningHours {
         'periods': periods,
         'weeklyText': weeklyText,
       };
+
+  @override
+  bool operator ==(other) =>
+      other is OpeningHours &&
+      other.weeklyText == weeklyText &&
+      const ListEquality().equals(other.periods, periods);
+
+  @override
+  int get hashCode => periods.hashCode ^ weeklyText.hashCode;
 }
 
 class Period {
@@ -59,6 +70,12 @@ class Period {
         'open': open,
         'close': close,
       };
+
+  @override
+  bool operator ==(other) => other is Period && other.open == open && other.close == close;
+
+  @override
+  int get hashCode => open.hashCode ^ close.hashCode;
 }
 
 class TimeOfWeek {
@@ -86,6 +103,13 @@ class TimeOfWeek {
         'day': day,
         'time': time,
       };
+
+  @override
+  bool operator ==(other) =>
+      other is TimeOfWeek && other.day == day && other.time == time;
+
+  @override
+  int get hashCode => day.hashCode ^ time.hashCode;
 }
 
 class LocalTime {
@@ -111,4 +135,11 @@ class LocalTime {
         'hours': hours,
         'minutes': minutes,
       };
+
+  @override
+  bool operator ==(other) =>
+      other is LocalTime && other.hours == hours && other.minutes == minutes;
+
+  @override
+  int get hashCode => hours.hashCode ^ minutes.hashCode;
 }

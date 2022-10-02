@@ -29,7 +29,7 @@ fun FindAutocompletePredictionsResponse.predictions(): MPredictions {
             types = it.placeTypes.map { type -> type.name })
     }
 
-    return MPredictions(predictions = predictions)
+    return MPredictions(autocompletePredictions = predictions)
 }
 
 fun String?.typeFiler(): TypeFilter? {

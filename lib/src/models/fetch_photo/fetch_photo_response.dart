@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:collection/collection.dart';
+
 /// The FetchPhotoResponse contains [Photo]
 class FetchPhotoResponse {
   ///Returns the requested image data.
@@ -25,4 +27,12 @@ class FetchPhotoResponse {
     final parsed = json.decode(responseBody).cast<String, dynamic>();
     return FetchPhotoResponse.fromJson(parsed);
   }
+
+  @override
+  bool operator ==(other) =>
+      other is FetchPhotoResponse &&
+      const ListEquality().equals(other.imageBytes, imageBytes);
+
+  @override
+  int get hashCode => imageBytes.hashCode;
 }

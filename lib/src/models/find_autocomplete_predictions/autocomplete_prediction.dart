@@ -62,4 +62,11 @@ class AutocompletePrediction {
         'distanceMeters': distanceMeters,
         'types': types,
       };
+
+  @override
+  bool operator ==(other) =>
+      other is AutocompletePrediction && other.placeId == placeId;
+
+  @override
+  int get hashCode => placeId.hashCode;
 }

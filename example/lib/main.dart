@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:gplaces/gplaces.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:places_autocomplete/places_autocomplete.dart';
 
 void main() {
   runApp(const MyApp());
@@ -114,7 +114,7 @@ class _MyAppState extends State<MyApp> {
     final metaData = placeResponse?.place?.photoMetadatas;
     if (await Places.isInitialized && metaData != null && metaData.isNotEmpty) {
       final request = FetchPhotoRequest(photoMetaData: metaData[0]);
-      _placesClient.fetchPhotos(request: request).then((response) {
+      _placesClient.fetchPhoto(request: request).then((response) {
         setState(() {
           _imageBytes = response?.imageBytes;
         });
@@ -148,10 +148,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future _setupClient() async {
-    Places.initialize(showLogs: true);
+    await Places.initialize(showLogs: true);
     _placesClient = Places.createClient();
-    //fetchPlace("ChIJHZyasTQBoDkRj53m5ZpLdSM");
-    //fetchAutocompletePredictions();
+    fetchPlace("ChIJHZyasTQBoDkRj53m5ZpLdSM");
+    fetchAutocompletePredictions();
     fetchPhoto("ChIJHZyasTQBoDkRj53m5ZpLdSM");
     findCurrentPlace();
   }

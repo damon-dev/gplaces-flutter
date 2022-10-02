@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2006
+if [[ `git status --porcelain` ]]; then
+  printf "\e[31;1m%s\e[0m\n" 'This script needs to run against committed code only. Please commit or stash you changes.'
+  exit 1
+fi
+# shellcheck disable=SC2154
+printf '%s\n' "${avar}"
