@@ -32,10 +32,10 @@ class FindAutocompletePredictionsResponse {
   }
 
   @override
-  bool operator ==(o) =>
-      o is FindAutocompletePredictionsResponse &&
+  bool operator ==(other) =>
+      other is FindAutocompletePredictionsResponse &&
       const ListEquality()
-          .equals(o.autocompletePredictions, autocompletePredictions);
+          .equals(other.autocompletePredictions, autocompletePredictions);
 
   @override
   int get hashCode => autocompletePredictions.hashCode;

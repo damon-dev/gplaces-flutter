@@ -31,8 +31,8 @@ class LocationBias {
       };
 
   @override
-  bool operator ==(o) =>
-      o is LocationBias && o.northeast == northeast && o.southwest == southwest;
+  bool operator ==(other) =>
+      other is LocationBias && other.northeast == northeast && other.southwest == southwest;
 
   @override
   int get hashCode => southwest.hashCode ^ northeast.hashCode;

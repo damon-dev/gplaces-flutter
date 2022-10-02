@@ -27,9 +27,9 @@ class FindCurrentPlaceResponse {
   }
 
   @override
-  bool operator ==(o) =>
-      o is FindCurrentPlaceResponse &&
-      const ListEquality().equals(o.placeLikelihoods, placeLikelihoods);
+  bool operator ==(other) =>
+      other is FindCurrentPlaceResponse &&
+      const ListEquality().equals(other.placeLikelihoods, placeLikelihoods);
 
   @override
   int get hashCode => placeLikelihoods.hashCode;

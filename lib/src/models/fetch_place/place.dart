@@ -221,29 +221,29 @@ class Place {
       };
 
   @override
-  bool operator ==(o) =>
-      o is Place &&
-      o.address == address &&
-      o.addressComponents == addressComponents &&
-      o.attributions == attributions &&
-      o.businessStatus == businessStatus &&
-      o.id == id &&
-      o.iconUrl == o.iconUrl &&
-      o.isOpen == isOpen &&
-      o.iconBackgroundColor == iconBackgroundColor &&
-      o.latLng == latLng &&
-      o.name == name &&
-      o.openingHours == openingHours &&
-      o.photoMetadatas == photoMetadatas &&
-      o.phoneNumber == phoneNumber &&
-      o.plusCode == plusCode &&
-      o.priceLevel == priceLevel &&
-      o.rating == rating &&
-      o.types == types &&
-      o.utcOffsetMinutes == utcOffsetMinutes &&
-      o.userRatingsTotal == userRatingsTotal &&
-      o.viewport == viewport &&
-      o.websiteUri == websiteUri;
+  bool operator ==(other) =>
+      other is Place &&
+      other.address == address &&
+      other.addressComponents == addressComponents &&
+      other.attributions == attributions &&
+      other.businessStatus == businessStatus &&
+      other.id == id &&
+      other.iconUrl == other.iconUrl &&
+      other.isOpen == isOpen &&
+      other.iconBackgroundColor == iconBackgroundColor &&
+      other.latLng == latLng &&
+      other.name == name &&
+      other.openingHours == openingHours &&
+      other.photoMetadatas == photoMetadatas &&
+      other.phoneNumber == phoneNumber &&
+      other.plusCode == plusCode &&
+      other.priceLevel == priceLevel &&
+      other.rating == rating &&
+      other.types == types &&
+      other.utcOffsetMinutes == utcOffsetMinutes &&
+      other.userRatingsTotal == userRatingsTotal &&
+      other.viewport == viewport &&
+      other.websiteUri == websiteUri;
 
   @override
   int get hashCode =>

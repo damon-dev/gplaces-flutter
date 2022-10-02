@@ -64,7 +64,8 @@ class AutocompletePrediction {
       };
 
   @override
-  bool operator ==(o) => o is AutocompletePrediction && o.placeId == placeId;
+  bool operator ==(other) =>
+      other is AutocompletePrediction && other.placeId == placeId;
 
   @override
   int get hashCode => placeId.hashCode;

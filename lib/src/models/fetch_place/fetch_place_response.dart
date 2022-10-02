@@ -26,7 +26,8 @@ class FetchPlaceResponse {
   }
 
   @override
-  bool operator ==(o) => o is FetchPlaceResponse && o.place == place;
+  bool operator ==(other) =>
+      other is FetchPlaceResponse && other.place == place;
 
   @override
   int get hashCode => place.hashCode;

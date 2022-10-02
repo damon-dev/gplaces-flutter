@@ -36,10 +36,10 @@ class Metadata {
       };
 
   @override
-  bool operator ==(o) =>
-      o is Metadata &&
-      o.attributions == attributions &&
-      o.photoReference == photoReference;
+  bool operator ==(other) =>
+      other is Metadata &&
+      other.attributions == attributions &&
+      other.photoReference == photoReference;
 
   @override
   int get hashCode => photoReference.hashCode ^ attributions.hashCode;

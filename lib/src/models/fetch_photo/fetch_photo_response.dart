@@ -29,9 +29,9 @@ class FetchPhotoResponse {
   }
 
   @override
-  bool operator ==(o) =>
-      o is FetchPhotoResponse &&
-      const ListEquality().equals(o.imageBytes, imageBytes);
+  bool operator ==(other) =>
+      other is FetchPhotoResponse &&
+      const ListEquality().equals(other.imageBytes, imageBytes);
 
   @override
   int get hashCode => imageBytes.hashCode;

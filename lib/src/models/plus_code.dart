@@ -23,10 +23,10 @@ class PlusCode {
       };
 
   @override
-  bool operator ==(o) =>
-      o is PlusCode &&
-      o.compoundCode == compoundCode &&
-      o.globalCode == globalCode;
+  bool operator ==(other) =>
+      other is PlusCode &&
+      other.compoundCode == compoundCode &&
+      other.globalCode == globalCode;
 
   @override
   int get hashCode => compoundCode.hashCode ^ globalCode.hashCode;

@@ -18,8 +18,9 @@ class AddressComponents {
       };
 
   @override
-  bool operator ==(o) =>
-      o is AddressComponents && const ListEquality().equals(o.asList, asList);
+  bool operator ==(other) =>
+      other is AddressComponents &&
+      const ListEquality().equals(other.asList, asList);
 
   @override
   int get hashCode => asList.hashCode;
@@ -57,11 +58,11 @@ class AddressComponent {
       };
 
   @override
-  bool operator ==(o) =>
-      o is AddressComponent &&
-      o.name == name &&
-      o.shortName == shortName &&
-      const ListEquality().equals(o.types, types);
+  bool operator ==(other) =>
+      other is AddressComponent &&
+      other.name == name &&
+      other.shortName == shortName &&
+      const ListEquality().equals(other.types, types);
 
   @override
   int get hashCode => name.hashCode ^ types.hashCode ^ shortName.hashCode;

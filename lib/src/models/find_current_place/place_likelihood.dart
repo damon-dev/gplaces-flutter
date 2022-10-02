@@ -25,8 +25,10 @@ class PlaceLikelihood {
       };
 
   @override
-  bool operator ==(o) =>
-      o is PlaceLikelihood && o.place == place && o.likelihood == likelihood;
+  bool operator ==(other) =>
+      other is PlaceLikelihood &&
+      other.place == place &&
+      other.likelihood == likelihood;
 
   @override
   int get hashCode => place.hashCode ^ likelihood.hashCode;

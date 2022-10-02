@@ -33,10 +33,10 @@ class OpeningHours {
       };
 
   @override
-  bool operator ==(o) =>
-      o is OpeningHours &&
-      o.weeklyText == weeklyText &&
-      const ListEquality().equals(o.periods, periods);
+  bool operator ==(other) =>
+      other is OpeningHours &&
+      other.weeklyText == weeklyText &&
+      const ListEquality().equals(other.periods, periods);
 
   @override
   int get hashCode => periods.hashCode ^ weeklyText.hashCode;
@@ -72,7 +72,7 @@ class Period {
       };
 
   @override
-  bool operator ==(o) => o is Period && o.open == open && o.close == close;
+  bool operator ==(other) => other is Period && other.open == open && other.close == close;
 
   @override
   int get hashCode => open.hashCode ^ close.hashCode;
@@ -105,7 +105,8 @@ class TimeOfWeek {
       };
 
   @override
-  bool operator ==(o) => o is TimeOfWeek && o.day == day && o.time == time;
+  bool operator ==(other) =>
+      other is TimeOfWeek && other.day == day && other.time == time;
 
   @override
   int get hashCode => day.hashCode ^ time.hashCode;
@@ -136,8 +137,8 @@ class LocalTime {
       };
 
   @override
-  bool operator ==(o) =>
-      o is LocalTime && o.hours == hours && o.minutes == minutes;
+  bool operator ==(other) =>
+      other is LocalTime && other.hours == hours && other.minutes == minutes;
 
   @override
   int get hashCode => hours.hashCode ^ minutes.hashCode;
