@@ -24,4 +24,10 @@ class FetchPlaceResponse {
     final parsed = json.decode(responseBody).cast<String, dynamic>();
     return FetchPlaceResponse.fromJson(parsed);
   }
+
+  @override
+  bool operator ==(o) => o is FetchPlaceResponse && o.place == place;
+
+  @override
+  int get hashCode => place.hashCode;
 }

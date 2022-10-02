@@ -1,7 +1,7 @@
 package co.codezens.places_autocomplete.models
 
 data class MPredictions(
-    val predictions: List<MPrediction>?
+    val autocompletePredictions: List<MPrediction>?
 )
 
 data class MPrediction(

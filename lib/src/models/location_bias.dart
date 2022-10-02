@@ -1,3 +1,4 @@
+import 'package:places_autocomplete/places_autocomplete.dart';
 import 'package:places_autocomplete/src/models/lat_lng.dart';
 
 ///[LocationBias] will favor results within the specified geographical bounds.
@@ -25,7 +26,14 @@ class LocationBias {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'northeast': northeast?.toJson(),
-    'southwest': southwest?.toJson(),
-  };
+        'northeast': northeast?.toJson(),
+        'southwest': southwest?.toJson(),
+      };
+
+  @override
+  bool operator ==(o) =>
+      o is LocationBias && o.northeast == northeast && o.southwest == southwest;
+
+  @override
+  int get hashCode => southwest.hashCode ^ northeast.hashCode;
 }

@@ -34,4 +34,13 @@ class Metadata {
         'height': height,
         'photoReference': photoReference,
       };
+
+  @override
+  bool operator ==(o) =>
+      o is Metadata &&
+      o.attributions == attributions &&
+      o.photoReference == photoReference;
+
+  @override
+  int get hashCode => photoReference.hashCode ^ attributions.hashCode;
 }

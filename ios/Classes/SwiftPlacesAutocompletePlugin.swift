@@ -40,6 +40,7 @@ public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
         
         do {
             try provideKeyAndInitClient(apiKey: apiKey as! String)
+            result("Initialized")
         } catch {
             let error = FlutterError.init(
                 code: "initialzePlaces",

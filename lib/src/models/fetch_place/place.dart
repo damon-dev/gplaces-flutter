@@ -219,4 +219,53 @@ class Place {
         'viewport': viewport,
         'websiteUri': websiteUri,
       };
+
+  @override
+  bool operator ==(o) =>
+      o is Place &&
+      o.address == address &&
+      o.addressComponents == addressComponents &&
+      o.attributions == attributions &&
+      o.businessStatus == businessStatus &&
+      o.id == id &&
+      o.iconUrl == o.iconUrl &&
+      o.isOpen == isOpen &&
+      o.iconBackgroundColor == iconBackgroundColor &&
+      o.latLng == latLng &&
+      o.name == name &&
+      o.openingHours == openingHours &&
+      o.photoMetadatas == photoMetadatas &&
+      o.phoneNumber == phoneNumber &&
+      o.plusCode == plusCode &&
+      o.priceLevel == priceLevel &&
+      o.rating == rating &&
+      o.types == types &&
+      o.utcOffsetMinutes == utcOffsetMinutes &&
+      o.userRatingsTotal == userRatingsTotal &&
+      o.viewport == viewport &&
+      o.websiteUri == websiteUri;
+
+  @override
+  int get hashCode =>
+      address.hashCode ^
+      addressComponents.hashCode ^
+      attributions.hashCode ^
+      businessStatus.hashCode ^
+      id.hashCode ^
+      isOpen.hashCode ^
+      iconUrl.hashCode ^
+      iconBackgroundColor.hashCode ^
+      latLng.hashCode ^
+      name.hashCode ^
+      openingHours.hashCode ^
+      priceLevel.hashCode ^
+      plusCode.hashCode ^
+      phoneNumber.hashCode ^
+      photoMetadatas.hashCode ^
+      rating.hashCode ^
+      types.hashCode ^
+      userRatingsTotal.hashCode ^
+      utcOffsetMinutes.hashCode ^
+      viewport.hashCode ^
+      websiteUri.hashCode;
 }

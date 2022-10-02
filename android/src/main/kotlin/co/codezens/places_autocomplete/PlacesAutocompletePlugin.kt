@@ -41,6 +41,7 @@ class PlacesAutocompletePlugin : FlutterPlugin, ActivityAware {
                 placesKey(activity)?.let { key ->
                     Places.initialize(activity.applicationContext, key)
                     placesClient = Places.createClient(activity.applicationContext)
+                    result.success("Initialized")
                 } ?: result.failure("apikey not found")
             } ?: result.failure("activity not found")
         }

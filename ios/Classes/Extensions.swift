@@ -43,7 +43,11 @@ extension [GMSAutocompletePrediction] {
             mPredictions.append(mPrediction)
         }
         
-        let encodedValue = JSONUtils.encode(object: MPredictions(predictions: mPredictions))
+        let encodedValue = JSONUtils.encode(
+            object: MPredictions(
+                autocompletePredictions: mPredictions
+            )
+        )
         
         return encodedValue == nil ? "[]" : encodedValue!
     }

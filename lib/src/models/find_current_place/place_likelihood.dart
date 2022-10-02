@@ -1,3 +1,4 @@
+import 'package:places_autocomplete/places_autocomplete.dart';
 import 'package:places_autocomplete/src/models/fetch_place/place.dart';
 
 class PlaceLikelihood {
@@ -22,4 +23,11 @@ class PlaceLikelihood {
         'likelihood': likelihood,
         'place': place,
       };
+
+  @override
+  bool operator ==(o) =>
+      o is PlaceLikelihood && o.place == place && o.likelihood == likelihood;
+
+  @override
+  int get hashCode => place.hashCode ^ likelihood.hashCode;
 }

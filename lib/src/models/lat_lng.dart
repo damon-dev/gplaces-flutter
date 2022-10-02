@@ -18,4 +18,11 @@ class LatLng {
         'latitude': latitude,
         'longitude': longitude,
       };
+
+  @override
+  bool operator ==(o) =>
+      o is LatLng && o.latitude == latitude && o.longitude == longitude;
+
+  @override
+  int get hashCode => latitude.hashCode ^ longitude.hashCode;
 }

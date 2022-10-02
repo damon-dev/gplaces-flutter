@@ -9,6 +9,10 @@ import 'package:places_autocomplete/src/models/find_autocomplete_predictions/fin
 import 'package:places_autocomplete/src/models/find_current_place/find_current_place_request.dart';
 import 'package:places_autocomplete/src/models/find_current_place/find_current_place_response.dart';
 
+import 'constants/plugin.dart';
+
+///Client that exposes the Places API methods.
+///To get a PlacesClient, use Places.createClient().
 class PlacesClient {
   final MethodChannel _methodChannel;
   final bool showLogs;
@@ -24,7 +28,7 @@ class PlacesClient {
   }) async {
     try {
       final predictions = await _methodChannel.invokeMethod(
-        'getPredictions',
+        Methods.FIND_AUTO_COMPLETE_PREDICTIONS,
         request.arguments,
       );
       _log(predictions);
@@ -45,10 +49,11 @@ class PlacesClient {
   }) async {
     try {
       final details = await _methodChannel.invokeMethod(
-        'getPlaceDetails',
+        Methods.FETCH_PLACE,
         request.arguments,
       );
       _log(details);
+
       return FetchPlaceResponse.parseResult(details);
     } catch (error) {
       _log(error);
@@ -60,12 +65,12 @@ class PlacesClient {
   ///The photos service may cache the image data. If the
   ///requested photo does not exist in the cache then a network
   ///lookup will be performed.
-  Future<FetchPhotoResponse?> fetchPhotos({
+  Future<FetchPhotoResponse?> fetchPhoto({
     required FetchPhotoRequest request,
   }) async {
     try {
       final data = await _methodChannel.invokeMethod(
-        'getPlacePhoto',
+        Methods.FETCH_PHOTO,
         request.arguments,
       );
       _log(data);
@@ -90,7 +95,7 @@ class PlacesClient {
   }) async {
     try {
       final data = await _methodChannel.invokeMethod(
-        'getCurrentPlace',
+        Methods.FIND_CURRENT_PLACE,
         request.arguments,
       );
       _log(data);

@@ -114,7 +114,7 @@ class _MyAppState extends State<MyApp> {
     final metaData = placeResponse?.place?.photoMetadatas;
     if (await Places.isInitialized && metaData != null && metaData.isNotEmpty) {
       final request = FetchPhotoRequest(photoMetaData: metaData[0]);
-      _placesClient.fetchPhotos(request: request).then((response) {
+      _placesClient.fetchPhoto(request: request).then((response) {
         setState(() {
           _imageBytes = response?.imageBytes;
         });
@@ -148,7 +148,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future _setupClient() async {
-    Places.initialize(showLogs: true);
+    await Places.initialize(showLogs: true);
     _placesClient = Places.createClient();
     //fetchPlace("ChIJHZyasTQBoDkRj53m5ZpLdSM");
     //fetchAutocompletePredictions();
