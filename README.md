@@ -11,7 +11,7 @@ It uses the [Places SDK for Android](https://developers.google.com/maps/document
 Help your customers explore where they are and what’s around them:
 
 * **Place Autocomplete** automatically fills in the name and/or address of a place as users type.
-* **Current Place*8 returns a list of places where the user’s device is last known to be located along with an indication of the relative likelihood for each place.
+* **Current Place** returns a list of places where the user’s device is last known to be located along with an indication of the relative likelihood for each place.
 * **Place Details** return and display more detailed information about a place.
 * **Place Photos** returns high-quality images of a place.
 
@@ -42,7 +42,7 @@ dependencies:
 ```
 
 * For **iOS** add it to `Info.plist`:
-```plist
+```html
 <key>GooglePlaceKey</key>
 <string>PASTE_YOUR_API_KEY_HERE</string>
 ```

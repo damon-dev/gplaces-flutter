@@ -65,7 +65,7 @@ Future fetchPlaceDetails() async {
 
 #### Fetches the approximate current location of the user's device.
 
-If your app does not use PlacesClient.findCurrentPlace(), explicitly remove the ACCESS_FINE_LOCATION permission introduced by the library by adding the following to your manifest:
+Note: If your app does not use PlacesClient.findCurrentPlace(), explicitly remove the ACCESS_FINE_LOCATION permission introduced by the library by adding the following to your manifest:
 ```xml
 <manifest ... xmlns:tools="http://schemas.android.com/tools">
     ...
@@ -75,7 +75,7 @@ If your app does not use PlacesClient.findCurrentPlace(), explicitly remove the 
 ```
 #### Requesting location authorization for iOS
 For iOS your app must request permission to use location services. Add the NSLocationWhenInUseUsageDescription key to your Info.plist file, to define the string informing the user why you need the location services. For example:
-```plist
+```html
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>Show your location on the map</string>
 ```
