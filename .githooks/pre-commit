@@ -19,7 +19,7 @@ fi
 
 # Flutter Analyzer
 printf "\e[33;1m%s\e[0m\n" 'Running Code analysis.....'
-flutter pub run dart_code_metrics:metrics analyze lib --set-exit-on-violation-level=warning --exclude=libs/analytics/analytics_manager.dart
+flutter analyze --no-pub
 if [ $? -ne 0 ]; then
   printf "\e[31;1m%s\e[0m\n" 'Flutter analyzer error, please fix analyser issues'
   exit 1
