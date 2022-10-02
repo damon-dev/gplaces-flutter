@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:places_autocomplete/places_autocomplete.dart';
-import 'package:places_autocomplete/src/models/find_current_place/place_likelihood.dart';
+import 'package:gplaces/src/models/find_current_place/place_likelihood.dart';
 
 class FindCurrentPlaceResponse {
   final List<PlaceLikelihood>? placeLikelihoods;

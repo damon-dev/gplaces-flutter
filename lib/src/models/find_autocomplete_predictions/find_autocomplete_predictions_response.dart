@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:places_autocomplete/places_autocomplete.dart';
 
 import 'autocomplete_prediction.dart';
 

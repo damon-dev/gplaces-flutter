@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:places_autocomplete/src/models/fetch_photo/fetch_photo_request.dart';
-import 'package:places_autocomplete/src/models/fetch_photo/fetch_photo_response.dart';
-import 'package:places_autocomplete/src/models/fetch_place/fetch_place_request.dart';
-import 'package:places_autocomplete/src/models/fetch_place/fetch_place_response.dart';
-import 'package:places_autocomplete/src/models/find_autocomplete_predictions/find_autocomplete_predictions_request.dart';
-import 'package:places_autocomplete/src/models/find_autocomplete_predictions/find_autocomplete_predictions_response.dart';
-import 'package:places_autocomplete/src/models/find_current_place/find_current_place_request.dart';
-import 'package:places_autocomplete/src/models/find_current_place/find_current_place_response.dart';
+import 'package:gplaces/src/models/fetch_photo/fetch_photo_request.dart';
+import 'package:gplaces/src/models/fetch_photo/fetch_photo_response.dart';
+import 'package:gplaces/src/models/fetch_place/fetch_place_request.dart';
+import 'package:gplaces/src/models/fetch_place/fetch_place_response.dart';
+import 'package:gplaces/src/models/find_autocomplete_predictions/find_autocomplete_predictions_request.dart';
+import 'package:gplaces/src/models/find_autocomplete_predictions/find_autocomplete_predictions_response.dart';
+import 'package:gplaces/src/models/find_current_place/find_current_place_request.dart';
+import 'package:gplaces/src/models/find_current_place/find_current_place_response.dart';
 
 import 'constants/plugin.dart';
 
@@ -61,7 +61,7 @@ class PlacesClient {
     }
   }
 
-  ///Fetches a photo.
+  ///Fetches the photo of a place.
   ///The photos service may cache the image data. If the
   ///requested photo does not exist in the cache then a network
   ///lookup will be performed.
@@ -90,6 +90,10 @@ class PlacesClient {
   ///result in a SecurityException being thrown.
   ///This API assumes Fused Location Provider is available on
   ///the device, in order to retrieve it's current location.
+  ///
+  ///Note : IMPORTANT! findCurrentPlace: does not support the following fields:
+  ///[Field.ADDRESS_COMPONENTS], [Field.OPENING_HOURS],
+  ///[Field.PHONE_NUMBER], [Field.UTC_OFFSET] and [Field.WEBSITE_URI]].
   Future<FindCurrentPlaceResponse?> findCurrentPlace({
     required FindCurrentPlaceRequest request,
   }) async {

@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:places_autocomplete/places_autocomplete.dart';
-import 'package:places_autocomplete/src/constants/plugin.dart';
+import 'package:gplaces/gplaces.dart';
+import 'package:gplaces/src/constants/plugin.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

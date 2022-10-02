@@ -1,4 +1,4 @@
-import 'package:places_autocomplete/src/constants/field.dart';
+import 'package:gplaces/src/constants/field.dart';
 
 class FindCurrentPlaceRequest {
   ///Use the values of [Field] to specify which place data types to return.

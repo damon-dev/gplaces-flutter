@@ -1,5 +1,4 @@
-import 'package:places_autocomplete/places_autocomplete.dart';
-import 'package:places_autocomplete/src/models/lat_lng.dart';
+import 'package:gplaces/src/models/lat_lng.dart';
 
 ///[LocationBias] will favor results within the specified geographical bounds.
 class LocationBias {

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:gplaces/gplaces.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:places_autocomplete/places_autocomplete.dart';
 
 void main() {
   runApp(const MyApp());
@@ -150,8 +150,8 @@ class _MyAppState extends State<MyApp> {
   Future _setupClient() async {
     await Places.initialize(showLogs: true);
     _placesClient = Places.createClient();
-    //fetchPlace("ChIJHZyasTQBoDkRj53m5ZpLdSM");
-    //fetchAutocompletePredictions();
+    fetchPlace("ChIJHZyasTQBoDkRj53m5ZpLdSM");
+    fetchAutocompletePredictions();
     fetchPhoto("ChIJHZyasTQBoDkRj53m5ZpLdSM");
     findCurrentPlace();
   }

@@ -2,13 +2,13 @@ import Flutter
 import UIKit
 import GooglePlaces
 
-public class SwiftPlacesAutocompletePlugin: NSObject, FlutterPlugin {
+public class SwiftGPlacesPlugin: NSObject, FlutterPlugin {
     private var placeClient: GMSPlacesClient?
     private var lastPhotoMetadatas: [GMSPlacePhotoMetadata]?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: Channel.NAME, binaryMessenger: registrar.messenger())
-        let instance = SwiftPlacesAutocompletePlugin()
+        let instance = SwiftGPlacesPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     

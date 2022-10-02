@@ -1,5 +1,4 @@
-import 'package:places_autocomplete/places_autocomplete.dart';
-import 'package:places_autocomplete/src/models/fetch_place/place.dart';
+import 'package:gplaces/src/models/fetch_place/place.dart';
 
 class PlaceLikelihood {
   ///Returns a value indicating the degree of confidence that

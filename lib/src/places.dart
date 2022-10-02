@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:places_autocomplete/src/constants/plugin.dart';
-import 'package:places_autocomplete/src/places_client.dart';
+import 'package:gplaces/src/constants/plugin.dart';
+import 'package:gplaces/src/places_client.dart';
 
 ///provides programmatic access to Google's database of local
 ///place and business information, as well as the device's current place.

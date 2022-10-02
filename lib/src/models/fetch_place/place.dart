@@ -1,7 +1,7 @@
-import 'package:places_autocomplete/src/models/lat_lng.dart';
-import 'package:places_autocomplete/src/models/location_bias.dart';
-import 'package:places_autocomplete/src/models/photo_metadatas.dart';
-import 'package:places_autocomplete/src/models/plus_code.dart';
+import 'package:gplaces/src/models/lat_lng.dart';
+import 'package:gplaces/src/models/location_bias.dart';
+import 'package:gplaces/src/models/photo_metadatas.dart';
+import 'package:gplaces/src/models/plus_code.dart';
 
 import '../address_components.dart';
 import '../opening_hours.dart';

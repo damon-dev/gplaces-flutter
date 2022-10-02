@@ -6,7 +6,7 @@ class Methods {
   Methods._();
 
   static const String INITIALIZE = "initialize";
-  static const String IS_INITIALIZE = "isInitialize";
+  static const String IS_INITIALIZE = "isInitialized";
   static const String FIND_AUTO_COMPLETE_PREDICTIONS = "getPredictions";
   static const String FETCH_PLACE = "getPlaceDetails";
   static const String FETCH_PHOTO = "getPlacePhoto";

@@ -1,4 +1,4 @@
-name: places_autocomplete
+name: gplaces
 description: A new Flutter plugin for handle google place api that
   place search and details and photos and autocomplete
   and query autocomplete requests are available
@@ -41,4 +41,4 @@ flutter:
         package: co.codezens.places_autocomplete
         pluginClass: PlacesAutocompletePlugin
       ios:
-        pluginClass: PlacesAutocompletePlugin
+        pluginClass: GPlacesPlugin

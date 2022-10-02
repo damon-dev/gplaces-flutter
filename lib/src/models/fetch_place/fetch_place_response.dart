@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:places_autocomplete/src/models/fetch_place/place.dart';
+import 'package:gplaces/src/models/fetch_place/place.dart';
 
 /// The FetchPlaceResponse contains [Place]
 class FetchPlaceResponse {
