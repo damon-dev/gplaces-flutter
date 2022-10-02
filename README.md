@@ -1,7 +1,7 @@
 # GPlaces
 
 ![tests](https://github.com/factoryplus/gplaces-flutter/actions/workflows/main.yml/badge.svg?branch=master)
-
+[![pub package](https://img.shields.io/pub/v/gplaces.svg)](https://pub.dartlang.org/packages/gplaces)
 ## 👋 Introduction
 **GPlaces** provides programmatic access to Google's database of local place and business information, as well as the device's current place.
 
