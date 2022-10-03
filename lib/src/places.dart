@@ -9,15 +9,20 @@ class Places {
   Places._();
 
   static bool _isLogsEnabled = true;
-  static const MethodChannel _methodChannel =
-      MethodChannel(CHANNEL_NAME);
+  static const MethodChannel _methodChannel = MethodChannel(CHANNEL_NAME);
+
+  static PlacesClient? _placesClient;
 
   ///Client that exposes the Places API methods.
   static PlacesClient createClient() {
-    return PlacesClient(
-      _methodChannel,
-      showLogs: _isLogsEnabled,
-    );
+    PlacesClient? placeClient = _placesClient;
+    if (placeClient == null) {
+      return PlacesClient(
+        _methodChannel,
+        showLogs: _isLogsEnabled,
+      );
+    }
+    return placeClient;
   }
 
   ///provides programmatic access to Google's database of local
