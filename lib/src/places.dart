@@ -8,21 +8,14 @@ import 'package:gplaces/src/places_client.dart';
 class Places {
   Places._();
 
+  static PlacesClient? _placesClient;
   static bool _isLogsEnabled = true;
   static const MethodChannel _methodChannel = MethodChannel(CHANNEL_NAME);
 
-  static PlacesClient? _placesClient;
-
   ///Client that exposes the Places API methods.
   static PlacesClient createClient() {
-    PlacesClient? placeClient = _placesClient;
-    if (placeClient == null) {
-      return PlacesClient(
-        _methodChannel,
-        showLogs: _isLogsEnabled,
-      );
-    }
-    return placeClient;
+    return _placesClient ??
+        PlacesClient(_methodChannel, showLogs: _isLogsEnabled);
   }
 
   ///provides programmatic access to Google's database of local
