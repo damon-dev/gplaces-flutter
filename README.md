@@ -20,7 +20,7 @@ Include the latest **gplaces** in your `pubspec.yaml`
 ```yaml
 dependencies:
   ...
-  gplaces: ^0.0.1
+  gplaces: ^0.0.2
   ...
 ```
 

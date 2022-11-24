@@ -2,7 +2,7 @@ name: gplaces
 description: A new Flutter plugin for handle google place api that
   place search and details and photos and autocomplete
   and query autocomplete requests are available
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/factoryplus/gplaces-flutter
 
 environment:
